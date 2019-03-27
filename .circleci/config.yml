@@ -36,5 +36,5 @@ jobs:
             pwd
             cd lambda/target
             ls -al
-            aws lambda update-function-code --function-name ResetPassword --zip-file fileb://LAMBDA.jar
+            aws lambda update-function-code --function-name ResetPassword --zip-file fileb://LAMBDA.jar --region us-east-1
             echo "New code uploaded to Lambda function successfully"
