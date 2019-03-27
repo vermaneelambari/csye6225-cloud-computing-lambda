@@ -1,0 +1,40 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    steps:
+      - checkout
+      - run:
+          name: Install AWS CLI
+          command: |
+            sudo apt-get install python3
+            sudo apt-get install python3-pip
+            python3 --version
+            pip3 --version
+            sudo pip3 install -q awscli --upgrade
+            aws --version
+            which aws
+      - run:
+          name: Build Artifact
+          command: |
+            cd lambda
+            sudo apt-get update
+            sudo apt-get install maven
+            mvn package
+            cd target
+            ls -al
+            cd
+      - run:
+          name: Update Lambda Configuration
+          command: |
+            aws lambda update-function-configuration --function-name ResetPassword --runtime java8
+            echo "Lambda function runtime update successfully"
+      - run:
+          name: Upload Code to Lambda Function 
+          command: |
+            pwd
+            cd lambda/target
+            ls -al
+            aws lambda update-function-code --function-name ResetPassword --zip-file fileb://LAMBDA.jar
+            echo "New code uploaded to Lambda function successfully"
