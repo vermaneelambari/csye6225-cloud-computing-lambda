@@ -26,11 +26,6 @@ jobs:
             ls -al
             cd
       - run:
-          name: Update Lambda Configuration
-          command: |
-            aws lambda update-function-configuration --function-name ResetPassword --runtime java8 --region us-east-1
-            echo "Lambda function runtime update successfully"
-      - run:
           name: Upload Code to Lambda Function 
           command: |
             pwd

@@ -98,7 +98,8 @@ public class ResetPassword implements RequestHandler<SNSEvent, Object> {
 					Item item = new Item()
 							.withPrimaryKey("username", email)
 							.with("timestamp_ttl", expirationTTL.toString())
-							.with("token", resetLink);
+							.with("token", token)
+							.with("resetLink", resetLink);
 					PutItemOutcome outcome = table.putItem(item);
 					logger.log("Token generated successfully for email: " + email);
 					
